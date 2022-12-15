@@ -1,24 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
+import { Context } from "./context.js";
 
 function App() {
+  const [todos, setTodos] = useState([]);
+  const [value, setValue] = useState("");
+
+  function addTodo(e) {
+    if (e.keyCode === 13) {
+      setTodos([...todos, { id: Date.now(), status: false, text: value }]);
+      setValue("");
+    }
+  }
+
+  function deleteTodo(id) {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  }
+
+  function setChecked(status, id) {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          todo.status = !status;
+        }
+        return todo;
+      })
+    );
+  }
+
+  useEffect(() => {
+    const saved = localStorage.getItem("todos");
+    setTodos(JSON.parse(saved));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context.Provider
+      value={{
+        deleteTodo,
+        setChecked,
+        todos,
+        value,
+        setValue,
+        addTodo,
+      }}
+    >
+      <div className="App">
+        <TodoInput />
+        <TodoList />
+      </div>
+    </Context.Provider>
   );
 }
 
