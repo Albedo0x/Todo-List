@@ -3,7 +3,7 @@ import { Context } from "../context.js";
 
 function TodoItem({ text, id, status }) {
   const cls = ["TodoItem"];
-  const { deleteTodo, setChecked } = useContext(Context);
+  const { dispatch } = useContext(Context);
 
   if (status) {
     cls.push("-checked");
@@ -15,12 +15,25 @@ function TodoItem({ text, id, status }) {
         <input
           type="checkbox"
           checked={status}
-          onChange={() => setChecked(status, id)}
+          onChange={() =>
+            dispatch({
+              type: "check",
+              payload: id,
+            })
+          }
         />
       </div>
       <div className="TodoItem-text">{text}</div>
       <div className="TodoItem-buttons">
-        <div className="TodoItem-delete" onClick={() => deleteTodo(id)}>
+        <div
+          className="TodoItem-delete"
+          onClick={() =>
+            dispatch({
+              type: "remove",
+              payload: id,
+            })
+          }
+        >
           <img src={require("../images/delete.png")} alt="" />
         </div>
       </div>

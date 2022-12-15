@@ -1,49 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import { Context } from "./context.js";
+import reducer from "./reducer";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [state, dispatch] = useReducer(
+    reducer,
+    JSON.parse(localStorage.getItem("todos"))
+  );
   const [value, setValue] = useState("");
 
   function addTodo(e) {
     if (e.keyCode === 13) {
-      setTodos([...todos, { id: Date.now(), status: false, text: value }]);
+      dispatch({
+        type: "add",
+        payload: value,
+      });
       setValue("");
     }
   }
 
-  function deleteTodo(id) {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  }
-
-  function setChecked(status, id) {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === id) {
-          todo.status = !status;
-        }
-        return todo;
-      })
-    );
-  }
-
   useEffect(() => {
-    const saved = localStorage.getItem("todos");
-    setTodos(JSON.parse(saved));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    localStorage.setItem("todos", JSON.stringify(state));
+  }, [state]);
 
   return (
     <Context.Provider
       value={{
-        deleteTodo,
-        setChecked,
-        todos,
+        dispatch,
+        state,
         value,
         setValue,
         addTodo,

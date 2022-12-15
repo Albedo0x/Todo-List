@@ -3,10 +3,10 @@ import { Context } from "../context.js";
 import TodoItem from "./TodoItem";
 
 function TodoList() {
-  const { todos } = useContext(Context);
+  const { state } = useContext(Context);
   return (
     <div className="TodoList">
-      {todos.map((todo) => (
+      {state.map((todo) => (
         <TodoItem
           key={todo.id}
           id={todo.id}
