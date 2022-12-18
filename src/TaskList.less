@@ -1,0 +1,46 @@
+//main: "./index.less"
+
+.TaskList {
+  display: grid;
+  justify-content: center;
+  height: 100%;
+  grid-area: sidebar;
+  border: 2px solid white;
+
+  &-Container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-items: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+
+    ul {
+      list-style: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  }
+
+  &-Input {
+    input[type="text"] {
+      width: 100%;
+      border: none;
+      height: 40px;
+      background-color: rgba(0, 0, 0, 0.1);
+      color: white;
+      font-size: 20px;
+      text-transform: uppercase;
+
+      &::placeholder {
+        color: white;
+      }
+
+      &:focus::placeholder {
+        color: transparent;
+      }
+    }
+  }
+}

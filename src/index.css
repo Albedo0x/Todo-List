@@ -1,44 +1,81 @@
-* {
-  margin: 0;
-  padding: 0;
+.TodoComponent {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+  height: 50px;
+  text-transform: uppercase;
+  font-weight: bold;
 }
-.App {
+.TaskList {
   display: grid;
-  grid-template-rows: 1fr 6fr;
   justify-content: center;
-  align-items: start;
-  height: 100vh;
-  width: 100%;
+  height: 100%;
+  grid-area: sidebar;
+  border: 2px solid white;
 }
-.TodoInput {
-  display: grid;
+.TaskList-Container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  justify-items: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.TaskList-Container ul {
+  list-style: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.TaskList-Input input[type="text"] {
+  width: 100%;
+  border: none;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+.TaskList-Input input[type="text"]::placeholder {
+  color: white;
+}
+.TaskList-Input input[type="text"]:focus::placeholder {
+  color: transparent;
+}
+.TodoHeader {
+  display: flex;
+  flex-direction: column;
+}
+.TodoHeader-Head {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 600px;
+  font-size: 26px;
+  font-weight: bold;
+  text-transform: uppercase;
+  height: 30%;
 }
-.TodoInput h1 {
-  display: grid;
-  justify-content: center;
+.TodoHeader-Img {
+  height: 100%;
 }
-.TodoInput input {
-  border: none;
-  border-bottom: 2px solid black;
-  box-sizing: border-box;
-  margin-top: 20px;
-  color: black;
-  font-size: 24px;
-  width: 500px;
-  height: 40px;
+.TodoHeader-Img img {
+  max-width: 100%;
+  max-height: 100%;
 }
-.TodoInput input:focus {
-  border: none;
-  outline: none;
-  border-bottom: 2px solid black;
+.TodoHeader-Name {
+  margin-left: 10px;
+  margin-right: 10px;
 }
-.TodoList {
-  display: grid;
-  grid-row-gap: 20px;
-  justify-content: center;
+.TodoHeader-Description {
+  display: flex;
+  align-items: center;
+  height: 70%;
+  font-size: 20px;
+  line-height: 1.5;
+  padding: 10px;
 }
 .TodoItem {
   display: grid;
@@ -47,7 +84,6 @@
   align-items: center;
   width: 600px;
   height: 50px;
-  border: 1px solid black;
   cursor: pointer;
 }
 .TodoItem-checked {
@@ -57,7 +93,6 @@
   align-items: center;
   width: 600px;
   height: 50px;
-  border: 1px solid black;
   cursor: pointer;
   background-color: #dadada;
   text-decoration: line-through;
@@ -84,4 +119,78 @@
 }
 .TodoItem-delete:hover {
   background-color: #dd8e8e;
+}
+.diamond {
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-bottom: 30px solid #ffffff;
+  position: relative;
+  top: -20px;
+}
+.diamond:after {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 30px;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-top: 30px solid #ffffff;
+}
+.TodoList {
+  display: grid;
+  grid-area: main;
+  grid-template-rows: 2fr 6fr;
+  border: 2px solid white;
+}
+.TodoBody {
+  display: grid;
+  grid-row-gap: 20px;
+  grid-auto-rows: min-content;
+  align-items: start;
+  justify-content: center;
+}
+.TodoInput {
+  display: grid;
+  grid-area: head;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: 2px solid white;
+}
+.TodoInput h1 {
+  display: grid;
+  justify-content: center;
+}
+.TodoInput input {
+  border: none;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  margin-top: 20px;
+  color: black;
+  font-size: 24px;
+  width: 600px;
+  height: 40px;
+}
+.TodoInput input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid black;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+.App {
+  display: grid;
+  grid-template-areas: "head head" "sidebar main";
+  grid-template-columns: 2fr 6fr;
+  grid-template-rows: 1fr 6fr;
+  grid-gap: 5px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("images/forest.jpg");
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  color: white;
 }

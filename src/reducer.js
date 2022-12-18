@@ -1,21 +1,18 @@
-function reducer(state, action) {
-  switch (action.type) {
+function reducer(state, { type, payload }) {
+  switch (type) {
     case "add":
-      return [
-        ...state,
-        { id: Date.now(), status: false, text: action.payload },
-      ];
+      return [...state, { id: Date.now(), status: false, text: payload }];
     case "remove":
-      return state.filter((todo) => todo.id !== action.payload);
+      return state.filter((todo) => todo.id !== payload);
     case "check":
       return state.map((todo) => {
-        if (todo.id === action.payload) {
+        if (todo.id === payload) {
           todo.status = !todo.status;
         }
         return todo;
       });
     default:
-      return state;
+      throw new Error(`Unknown action type: ${type}`);
   }
 }
 

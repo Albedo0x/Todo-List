@@ -1,0 +1,37 @@
+//main: "./index.less"
+
+.TodoHeader {
+  display: flex;
+  flex-direction: column;
+
+  &-Head {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 30%;
+  }
+
+  &-Img {
+    height: 100%;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  &-Name {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  &-Description {
+    display: flex;
+    align-items: center;
+    height: 70%;
+    font-size: 20px;
+    line-height: 1.5;
+    padding: 10px;
+  }
+}
