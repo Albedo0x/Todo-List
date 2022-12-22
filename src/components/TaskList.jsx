@@ -1,33 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useId } from "react";
 import TodoComponent from "./TodoComponent";
 
-function TaskList({ test }) {
-  // const [value, setValue] = useState("");
-  // const [todoNames, setTodoNames] = useState([
-  //   {
-  //     id: Date.now(),
-  //     status: false,
-  //     text: "",
-  //   },
-  // ]);
+function TaskList({ test, setTest }) {
+  const [value, setValue] = useState("");
+  const idOdTodo = useId();
+  const idOfTask = useId();
 
-  // useEffect(() => {
-  //   setTodoNames(JSON.parse(localStorage.getItem("todoNames")));
-  // }, []);
+  function removeTodo(id) {
+    console.log("i am here to remove");
+    console.log(id);
+    console.log(test);
+    setTest(test.filter((todo) => todo.todoId !== id));
+  }
 
-  // useEffect(() => {
-  //   localStorage.setItem("todoNames", JSON.stringify(todoNames));
-  // }, [todoNames]);
-
-  // function addTodo(e) {
-  //   if (e.keyCode === 13 && e.target.value !== "") {
-  //     setTodoNames([
-  //       ...todoNames,
-  //       { id: Date.now(), status: false, text: e.target.value },
-  //     ]);
-  //     setValue("");
-  //   }
-  // }
+  function addTodo(e) {
+    if (e.keyCode === 13 && e.target.value !== "") {
+      setTest([
+        ...test,
+        {
+          todoId: `${idOdTodo}-${Date.now()}`,
+          todoName: `/${e.target.value}`,
+          todoDescription: `This is ${e.target.value} to do`,
+          todos: [
+            {
+              id: `${idOfTask}-e.target.value`,
+              status: false,
+              text: "like this8",
+            },
+          ],
+        },
+      ]);
+      setValue("");
+    }
+  }
 
   return (
     <div className="TaskList">
@@ -35,20 +40,22 @@ function TaskList({ test }) {
         <div className="TaskList-Input">
           <input
             type="text"
-            // value={value}
+            value={value}
             placeholder="+ Добавить"
-            // onChange={(e) => {
-            //   setValue(e.target.value);
-            // }}
-            // onKeyUp={addTodo}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+            onKeyUp={addTodo}
           />
         </div>
         <ul className="TaskList-InProgress">
           {test.map((todoName) => (
             <TodoComponent
               key={todoName.todoId}
-              // id={todoName.id}
+              id={todoName.todoId}
               text={todoName.todoName}
+              to={todoName.todoName}
+              removeTodo={removeTodo}
               // status={todoName.status}
               // todoNames={todoNames}
               // setTodoNames={setTodoNames}

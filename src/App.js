@@ -12,37 +12,8 @@ function App() {
   //   reducer,
   //   JSON.parse(localStorage.getItem("todos"))
   // );
-  // const [value, setValue] = useState("");
 
-  const test = [
-    {
-      todoId: 1,
-      todoName: "first",
-      todoDescription: "this if the first To Do",
-      todos: [
-        { id: 1, status: false, text: "like this" },
-        { id: 2, status: false, text: "like that" },
-      ],
-    },
-    {
-      todoId: 2,
-      todoName: "second",
-      todoDescription: "this if the second To Do",
-      todos: [
-        { id: 1, status: false, text: "like this" },
-        { id: 2, status: false, text: "like that" },
-      ],
-    },
-    {
-      todoId: 3,
-      todoName: "third",
-      todoDescription: "this if the third To Do",
-      todos: [
-        { id: 1, status: false, text: "like this" },
-        { id: 2, status: false, text: "like that" },
-      ],
-    },
-  ];
+  const [test, setTest] = useState([]);
 
   // function addTodo(e) {
   //   if (e.keyCode === 13 && e.target.value !== "") {
@@ -54,9 +25,13 @@ function App() {
   //   }
   // }
 
-  // useEffect(() => {
-  //   localStorage.setItem("todos", JSON.stringify(state));
-  // }, [state]);
+  useEffect(() => {
+    setTest(JSON.parse(localStorage.getItem("test")));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("test", JSON.stringify(test));
+  }, [test]);
 
   return (
     // <Context.Provider
@@ -72,8 +47,25 @@ function App() {
     // >
     <div className="App">
       <TodoInput />
-      <TaskList test={test} />
-      <TodoList test={test} />
+      <TaskList test={test} setTest={setTest} />
+      <Routes>
+        {test.map((todo) => (
+          <Route
+            key={todo.todoId}
+            path={todo.todoName}
+            element={
+              <TodoList
+                desc={todo.todoDescription}
+                todos={todo.todos}
+                test={test}
+                setTest={setTest}
+                id={todo.todoId}
+                header={todo.todoName}
+              />
+            }
+          />
+        ))}
+      </Routes>
     </div>
     // </Context.Provider>
   );

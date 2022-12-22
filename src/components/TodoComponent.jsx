@@ -1,17 +1,12 @@
 import React from "react";
-
-function TodoComponent({ text, id, todoNames, setTodoNames }) {
-  // function removeTodoName(id) {
-  //   setTodoNames(todoNames.filter((todoName) => todoName.id !== id));
-  // }
-
+import { Link } from "react-router-dom";
+function TodoComponent({ text, to, id, removeTodo }) {
   return (
     <li className="TodoComponent">
-      <div>{text}</div>
-      <div
-        className="TodoItem-delete"
-        // onClick={() => removeTodoName(id)}
-      >
+      <div contentEditable={false}>
+        <Link to={to}>{text}</Link>
+      </div>
+      <div className="TodoItem-delete" onClick={() => removeTodo(id)}>
         <img src={require("../images/delete.png")} alt="" />
       </div>
     </li>

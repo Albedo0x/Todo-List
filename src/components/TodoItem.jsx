@@ -1,13 +1,27 @@
 import React, { useContext } from "react";
 import { Context } from "../context.js";
 
-function TodoItem({ text, id, status }) {
+function TodoItem({ text, id, status, test, setTest, otherId }) {
   const cls = ["TodoItem"];
   // const { dispatch } = useContext(Context);
 
   // if (status) {
   //   cls.push("-checked");
   // }
+
+  function deleteItem(id) {
+    setTest(
+      test.map((elem) => {
+        if (elem.todoId === otherId) {
+          elem.todos.splice(
+            elem.todos.findIndex((item) => item.id === id),
+            1
+          );
+        }
+        return elem;
+      })
+    );
+  }
 
   return (
     <div className={cls.join("")}>
@@ -25,15 +39,7 @@ function TodoItem({ text, id, status }) {
       </div>
       <div className="TodoItem-text">{text}</div>
       <div className="TodoItem-buttons">
-        <div
-          className="TodoItem-delete"
-          // onClick={() =>
-          //   dispatch({
-          //     type: "remove",
-          //     payload: id,
-          //   })
-          // }
-        >
+        <div className="TodoItem-delete" onClick={() => deleteItem(id)}>
           <img src={require("../images/delete.png")} alt="" />
         </div>
       </div>
