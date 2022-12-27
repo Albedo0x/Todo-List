@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import { Context } from "../context.js";
 
-function TodoItem({ text, id, status, test, setTest, otherId }) {
+function TodoItem({ text, id, status, test, setTest, otherId, todos }) {
   const cls = ["TodoItem"];
   // const { dispatch } = useContext(Context);
-
-  // if (status) {
-  //   cls.push("-checked");
-  // }
+  if (status) {
+    cls.push("-checked");
+  }
 
   function deleteItem(id) {
     setTest(
@@ -23,18 +22,29 @@ function TodoItem({ text, id, status, test, setTest, otherId }) {
     );
   }
 
+  function checkItem(id) {
+    setTest(
+      test.map((elem) => {
+        if (elem.todoId === otherId) {
+          elem.todos.map((todo) => {
+            if (todo.id === id) {
+              todo.status = !todo.status;
+            }
+            return todo;
+          });
+        }
+        return elem;
+      })
+    );
+  }
+
   return (
     <div className={cls.join("")}>
       <div className="TodoItem-checkbox">
         <input
           type="checkbox"
-          // checked={status}
-          // onChange={() =>
-          //   dispatch({
-          //     type: "check",
-          //     payload: id,
-          //   })
-          // }
+          checked={status}
+          onChange={() => checkItem(id)}
         />
       </div>
       <div className="TodoItem-text">{text}</div>

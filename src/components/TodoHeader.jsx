@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 
-function TodoHeader({ header, desc }) {
+function TodoHeader({ header, desc, setTest, test, otherId }) {
+  const [readOnly, setReadOnly] = useState(true);
+  const [value, setValue] = useState(desc);
+
+  function enableEditing(e) {
+    setReadOnly(false);
+  }
+
+  function changeDescription(e) {
+    setValue(e.target.value);
+  }
+
+  function finishEditing(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setReadOnly(true);
+      setTest(
+        test.map((elem) => {
+          if (elem.todoId === otherId) {
+            elem.todoDescription = value;
+          }
+          return elem;
+        })
+      );
+    }
+  }
+
   return (
     <div className="TodoHeader">
       <div className="TodoHeader-Head">
@@ -13,7 +39,14 @@ function TodoHeader({ header, desc }) {
         </div>
       </div>
       <div className="TodoHeader-Description">
-        <div className="TodoHeader-Text">{desc}</div>
+        <textarea
+          className="TodoHeader-Text"
+          readOnly={readOnly}
+          value={value}
+          onDoubleClick={enableEditing}
+          onChange={(e) => changeDescription(e)}
+          onKeyDown={(e) => finishEditing(e)}
+        ></textarea>
       </div>
     </div>
   );

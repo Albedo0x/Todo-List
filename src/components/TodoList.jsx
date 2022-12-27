@@ -20,28 +20,19 @@ function TodoList({ id, header, todos, desc, setTest, test }) {
           return elem;
         })
       );
-      // setTest([
-      //   ...test,
-      //   {
-      //     todoId: `${idOdTodo}-${Date.now()}`,
-      //     todoName: `/${e.target.value}`,
-      //     todoDescription: `This is ${e.target.value} to do`,
-      //     todos: [
-      //       {
-      //         id: `${idOfTask}-e.target.value`,
-      //         status: false,
-      //         text: "like this8",
-      //       },
-      //     ],
-      //   },
-      // ]);
-      // setValue("");
     }
   }
 
   return (
     <div className="TodoList">
-      <TodoHeader key={id} desc={desc} header={header} />
+      <TodoHeader
+        key={id}
+        desc={desc}
+        header={header}
+        setTest={setTest}
+        test={test}
+        otherId={id}
+      />
       <div className="TodoBody">
         <input
           type="text"
@@ -49,6 +40,7 @@ function TodoList({ id, header, todos, desc, setTest, test }) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyUp={addItem}
+          className="TodoBody"
         />
         {todos.map((todo) => (
           <TodoItem

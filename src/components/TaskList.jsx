@@ -7,9 +7,6 @@ function TaskList({ test, setTest }) {
   const idOfTask = useId();
 
   function removeTodo(id) {
-    console.log("i am here to remove");
-    console.log(id);
-    console.log(test);
     setTest(test.filter((todo) => todo.todoId !== id));
   }
 
