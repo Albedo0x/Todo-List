@@ -6,6 +6,8 @@
   height: 100%;
   grid-area: sidebar;
   border: 2px solid white;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.4);
 
   &-Container {
     display: flex;
@@ -28,14 +30,21 @@
     input[type="text"] {
       width: 100%;
       border: none;
+      border-bottom: 1px solid white;
       height: 40px;
       background-color: rgba(0, 0, 0, 0.1);
       color: white;
       font-size: 20px;
       text-transform: uppercase;
 
+      &:focus {
+        outline: none;
+      }
+
       &::placeholder {
-        color: white;
+        color: rgba(255, 255, 255, 0.247);
+        font-style: italic;
+        font-size: 18px;
       }
 
       &:focus::placeholder {

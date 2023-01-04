@@ -1,42 +1,37 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../context";
 
-function TodoInput() {
-  const weekday = [
-    "Morndas ",
-    "Tirdas ",
-    "Middas ",
-    "Turdas ",
-    "Fredas ",
-    "Loredas ",
-    "Sundas ",
-  ];
+function TodoInput({ id }) {
+  const { test, setTest } = useContext(Context);
+  const [value, setValue] = useState("");
 
-  const monthOfTheYear = [
-    "Morning Star ",
-    "Sun's Dawn ",
-    "First Seed ",
-    "Rain's Hand ",
-    "Second Seed ",
-    "Mid Year ",
-    "Sun's Height ",
-    "Last Seed",
-    "Hearthfire ",
-    "Frost Fall ",
-    "Sun's Dusk ",
-    "Evening Star ",
-  ];
-
-  let d = new Date();
-  let day = d.getDate();
-  let month = d.getMonth();
-  let myear = monthOfTheYear[month];
-  let wday = weekday[d.getDay()];
+  function addItem(e) {
+    if (e.keyCode === 13 && e.target.value !== "") {
+      setTest(
+        test.map((elem) => {
+          if (elem.todoId === id) {
+            elem.todos.push({
+              id: Date.now() / 2,
+              status: false,
+              text: value,
+            });
+          }
+          return elem;
+        })
+      );
+      setValue("");
+    }
+  }
 
   return (
     <div className="TodoInput">
-      <h1>
-        {wday} ' {day}th of {myear}
-      </h1>
+      <input
+        type="text"
+        placeholder="Введи что собираешься делать"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyUp={addItem}
+      />
     </div>
   );
 }

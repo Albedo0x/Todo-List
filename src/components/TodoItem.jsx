@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Context } from "../context.js";
 
-function TodoItem({ text, id, status, test, setTest, otherId, todos }) {
+function TodoItem({ otherId, task }) {
+  const { test, setTest } = useContext(Context);
   const cls = ["TodoItem"];
   // const { dispatch } = useContext(Context);
-  if (status) {
+  if (task.status) {
     cls.push("-checked");
   }
 
@@ -43,14 +44,14 @@ function TodoItem({ text, id, status, test, setTest, otherId, todos }) {
       <div className="TodoItem-checkbox">
         <input
           type="checkbox"
-          checked={status}
-          onChange={() => checkItem(id)}
+          checked={task.status}
+          onChange={() => checkItem(task.id)}
         />
       </div>
-      <div className="TodoItem-text">{text}</div>
+      <div className="TodoItem-text">{task.text}</div>
       <div className="TodoItem-buttons">
-        <div className="TodoItem-delete" onClick={() => deleteItem(id)}>
-          <img src={require("../images/delete.png")} alt="" />
+        <div className="TodoItem-delete" onClick={() => deleteItem(task.id)}>
+          <img src={require("../images/remove_white.png")} alt="" />
         </div>
       </div>
     </div>

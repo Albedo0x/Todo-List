@@ -1,10 +1,26 @@
 .TodoComponent {
   display: flex;
+  width: 100%;
   flex-direction: row;
-  justify-content: right;
+  justify-content: space-between;
   align-items: center;
   height: 50px;
   text-transform: uppercase;
+}
+.TodoComponent-Name {
+  margin-right: 10px;
+}
+.TodoComponent a {
+  text-decoration: none;
+  color: white;
+}
+.TodoComponent a:hover {
+  text-decoration: none;
+  color: white;
+}
+.TodoComponent a:active {
+  text-decoration: none;
+  color: white;
   font-weight: bold;
 }
 .TaskList {
@@ -13,6 +29,8 @@
   height: 100%;
   grid-area: sidebar;
   border: 2px solid white;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 .TaskList-Container {
   display: flex;
@@ -32,14 +50,20 @@
 .TaskList-Input input[type="text"] {
   width: 100%;
   border: none;
+  border-bottom: 1px solid white;
   height: 40px;
   background-color: rgba(0, 0, 0, 0.1);
   color: white;
   font-size: 20px;
   text-transform: uppercase;
 }
+.TaskList-Input input[type="text"]:focus {
+  outline: none;
+}
 .TaskList-Input input[type="text"]::placeholder {
-  color: white;
+  color: rgba(255, 255, 255, 0.247);
+  font-style: italic;
+  font-size: 18px;
 }
 .TaskList-Input input[type="text"]:focus::placeholder {
   color: transparent;
@@ -47,13 +71,13 @@
 .TodoHeader {
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(2px);
 }
 .TodoHeader-Head {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  font-size: 26px;
   font-weight: bold;
   text-transform: uppercase;
   height: 30%;
@@ -66,8 +90,14 @@
   max-height: 100%;
 }
 .TodoHeader-Name {
-  margin-left: 10px;
-  margin-right: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+  outline: none;
+  resize: none;
+  border: none;
+  font-size: 26px;
+  width: 200px;
+  text-align: center;
 }
 .TodoHeader-Text {
   width: 100%;
@@ -78,6 +108,35 @@
   resize: none;
   border: none;
   font-size: 20px;
+  line-height: 1.4;
+  text-align: justify;
+  overflow: auto;
+  padding: 5px;
+}
+.TodoHeader-Text::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.TodoHeader-Text::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.618);
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+.TodoHeader-Text::-webkit-scrollbar-button:vertical:start:decrement {
+  background: linear-gradient(120deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(240deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(0deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TodoHeader-Text::-webkit-scrollbar-button:vertical:end:increment {
+  background: linear-gradient(300deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(60deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(180deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TodoHeader-Text::-webkit-scrollbar-button:horizontal:start:decrement {
+  background: linear-gradient(30deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(150deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(270deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TodoHeader-Text::-webkit-scrollbar-button:horizontal:end:increment {
+  background: linear-gradient(210deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(330deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(90deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
 }
 .TodoHeader-Description {
   display: flex;
@@ -95,6 +154,9 @@
   width: 600px;
   height: 50px;
   cursor: pointer;
+}
+.TodoItem:hover {
+  background-color: rgba(255, 255, 255, 0.06);
 }
 .TodoItem-checked {
   display: grid;
@@ -121,14 +183,18 @@
   justify-content: right;
 }
 .TodoItem-delete {
-  display: grid;
+  display: flex;
+  justify-content: center;
   width: 32px;
   height: 32px;
   border-radius: 5px;
-  padding-right: 7px;
 }
 .TodoItem-delete:hover {
-  background-color: #dd8e8e;
+  background-color: #dea6a6;
+}
+.TodoItem-delete img {
+  max-width: 90%;
+  max-height: 90%;
 }
 .diamond {
   width: 0;
@@ -153,6 +219,8 @@
   grid-area: main;
   grid-template-rows: 2fr 6fr;
   border: 2px solid white;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 .TodoBody {
   display: grid;
@@ -161,32 +229,54 @@
   align-items: start;
   justify-content: center;
 }
-.TodoInput {
+.TodoInput input[type="text"] {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid white;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+.TodoInput input[type="text"]:focus {
+  outline: none;
+}
+.TodoInput input[type="text"]::placeholder {
+  color: rgba(255, 255, 255, 0.247);
+  font-style: italic;
+  font-size: 18px;
+}
+.TodoInput input[type="text"]:focus::placeholder {
+  color: transparent;
+}
+.todoinfo {
   display: grid;
   grid-area: head;
-  justify-content: center;
+  grid-template-columns: 1fr 10fr;
   align-items: center;
   width: 100%;
   border: 2px solid white;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100px;
+  font-size: 22px;
 }
-.TodoInput h1 {
+.todoinfo-img {
+  display: flex;
+  justify-content: right;
+  width: 90px;
+  max-height: 100%;
+  height: 100px;
+}
+.todoinfo-img img {
+  max-width: 100%;
+  max-height: 100%;
+  height: 100%;
+}
+.todoinfo h1 {
   display: grid;
-  justify-content: center;
-}
-.TodoInput input {
-  border: none;
-  border-bottom: 2px solid black;
-  box-sizing: border-box;
-  margin-top: 20px;
-  color: black;
-  font-size: 24px;
-  width: 600px;
-  height: 40px;
-}
-.TodoInput input:focus {
-  border: none;
-  outline: none;
-  border-bottom: 2px solid black;
+  text-align: left;
 }
 * {
   margin: 0;
@@ -194,17 +284,25 @@
 }
 body {
   font-family: "Roboto Condensed", sans-serif;
-  font-size: 38px;
+}
+#root {
+  display: grid;
+  font-size: 34px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("images/forest.jpg");
+  background-size: cover;
+  justify-items: center;
+  align-items: center;
+  height: 100vh;
 }
 .App {
   display: grid;
   grid-template-areas: "head head" "sidebar main";
   grid-template-columns: 2fr 6fr;
-  grid-template-rows: 1fr 6fr;
+  grid-template-rows: 100px 7fr;
   grid-gap: 5px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("images/forest.jpg");
-  background-size: cover;
-  height: 100vh;
-  width: 100%;
+  grid-row-gap: 30px;
+  width: 90%;
+  max-width: 1600px;
+  height: 90vh;
   color: white;
 }

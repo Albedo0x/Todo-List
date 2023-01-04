@@ -3,13 +3,13 @@
 .TodoHeader {
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(2px);
 
   &-Head {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    font-size: 26px;
     font-weight: bold;
     text-transform: uppercase;
     height: 30%;
@@ -23,8 +23,18 @@
     }
   }
   &-Name {
-    margin-left: 10px;
-    margin-right: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: white;
+    outline: none;
+    resize: none;
+    border: none;
+    font-size: 26px;
+    width: 200px;
+    text-align: center;
+
+    &:focus {
+      //outline: 1px solid white;
+    }
   }
   &-Text {
     width: 100%;
@@ -35,6 +45,48 @@
     resize: none;
     border: none;
     font-size: 20px;
+    line-height: 1.4;
+    text-align: justify;
+    overflow: auto;
+    padding: 5px;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.618);
+      border-radius: 9em;
+      box-shadow: inset 1px 1px 10px #f3faf7;
+    }
+    &::-webkit-scrollbar-button:vertical:start:decrement {
+      background: linear-gradient(120deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(240deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(0deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+      background-color: #f6f8f4;
+    }
+
+    &::-webkit-scrollbar-button:vertical:end:increment {
+      background: linear-gradient(300deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(60deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(180deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+      background-color: #f6f8f4;
+    }
+
+    &::-webkit-scrollbar-button:horizontal:start:decrement {
+      background: linear-gradient(30deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(150deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(270deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+      background-color: #f6f8f4;
+    }
+
+    &::-webkit-scrollbar-button:horizontal:end:increment {
+      background: linear-gradient(210deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(330deg, #02141a 40%, rgba(0, 0, 0, 0) 41%),
+        linear-gradient(90deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+      background-color: #f6f8f4;
+    }
   }
   &-Description {
     display: flex;

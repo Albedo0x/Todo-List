@@ -7,3 +7,30 @@
   align-items: start;
   justify-content: center;
 }
+
+.TodoInput {
+  input[type="text"] {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid white;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.247);
+      font-style: italic;
+      font-size: 18px;
+    }
+
+    &:focus::placeholder {
+      color: transparent;
+    }
+  }
+}
