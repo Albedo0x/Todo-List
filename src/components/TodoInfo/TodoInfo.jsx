@@ -1,5 +1,5 @@
 import React from "react";
-import { weekday, monthOfTheYear } from "../skyrimcalendar";
+import { weekday, monthOfTheYear } from "../../utilities/skyrimcalendar";
 
 function TodoInfo() {
   let d = new Date();
@@ -12,9 +12,9 @@ function TodoInfo() {
   let wday = weekday[d.getDay()];
 
   return (
-    <div className="todoinfo">
-      <div className="todoinfo-img">
-        <img src={require("../images/logo_v3.png")} alt="" />
+    <div className="TodoInfo">
+      <div className="TodoInfo-img">
+        <img src={require("../../images/logo_v3.png")} alt="" />
       </div>
       <h1>
         {wday}, {h}:{m}, {day} {myear}, {y}

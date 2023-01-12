@@ -1,24 +1,19 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../context";
+import { Context } from "../../context/context";
 
 function TodoInput({ id }) {
-  const { test, setTest } = useContext(Context);
+  const { dispatch } = useContext(Context);
   const [value, setValue] = useState("");
 
   function addItem(e) {
     if (e.keyCode === 13 && e.target.value !== "") {
-      setTest(
-        test.map((elem) => {
-          if (elem.todoId === id) {
-            elem.todos.push({
-              id: Date.now() / 2,
-              status: false,
-              text: value,
-            });
-          }
-          return elem;
-        })
-      );
+      dispatch({
+        type: "addItem",
+        payload: {
+          taskId: id,
+          value: value,
+        },
+      });
       setValue("");
     }
   }

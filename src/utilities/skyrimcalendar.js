@@ -1,11 +1,11 @@
 const weekday = [
+  "Sundas ",
   "Morndas ",
   "Tirdas ",
   "Middas ",
   "Turdas ",
   "Fredas ",
   "Loredas ",
-  "Sundas ",
 ];
 
 const monthOfTheYear = [

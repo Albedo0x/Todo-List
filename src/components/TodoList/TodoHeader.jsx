@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../context.js";
+import { Context } from "../../context/context.js";
 
 function TodoHeader({ header, desc, otherId }) {
-  const { test, setTest } = useContext(Context);
+  const { dispatch } = useContext(Context);
   const [readOnly, setReadOnly] = useState(true);
   const [value, setValue] = useState(desc);
   const [headerValue, setHeaderValue] = useState(header);
@@ -25,14 +25,13 @@ function TodoHeader({ header, desc, otherId }) {
     if (e.key === "Enter") {
       e.preventDefault();
       setReadOnly(true);
-      setTest(
-        test.map((elem) => {
-          if (elem.todoId === otherId) {
-            elem.todoName = headerValue;
-          }
-          return elem;
-        })
-      );
+      dispatch({
+        type: "editHeader",
+        payload: {
+          todoId: otherId,
+          valueName: headerValue,
+        },
+      });
       navigate(`/${headerValue}`);
     }
   }
@@ -41,14 +40,13 @@ function TodoHeader({ header, desc, otherId }) {
     if (e.key === "Enter") {
       e.preventDefault();
       setReadOnly(true);
-      setTest(
-        test.map((elem) => {
-          if (elem.todoId === otherId) {
-            elem.todoDescription = value;
-          }
-          return elem;
-        })
-      );
+      dispatch({
+        type: "editDescription",
+        payload: {
+          todoId: otherId,
+          valueDesc: value,
+        },
+      });
     }
   }
 
@@ -56,7 +54,7 @@ function TodoHeader({ header, desc, otherId }) {
     <div className="TodoHeader">
       <div className="TodoHeader-Head">
         <div className="TodoHeader-Img">
-          <img src={require("../images/dragon_left.png")} alt="" />
+          <img src={require("../../images/dragon_left.png")} alt="" />
         </div>
         <input
           className="TodoHeader-Name"
@@ -67,9 +65,10 @@ function TodoHeader({ header, desc, otherId }) {
           onChange={(e) => changeName(e)}
           onKeyDown={(e) => finishNameEditing(e)}
           spellCheck="false"
+          maxLength="20"
         />
         <div className="TodoHeader-Img">
-          <img src={require("../images/dragon_right.png")} alt="" />
+          <img src={require("../../images/dragon_right.png")} alt="" />
         </div>
       </div>
       <div className="TodoHeader-Description">
@@ -77,8 +76,8 @@ function TodoHeader({ header, desc, otherId }) {
           className="TodoHeader-Text"
           readOnly={readOnly}
           value={value}
-          onDoubleClick={enableEditing}
           spellCheck="false"
+          onDoubleClick={enableEditing}
           onChange={(e) => changeDescription(e)}
           onKeyDown={(e) => finishEditing(e)}
           maxLength="600"

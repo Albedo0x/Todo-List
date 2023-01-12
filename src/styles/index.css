@@ -1,26 +1,34 @@
-.TodoComponent {
+.TaskComponent {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  text-transform: uppercase;
+}
+.TaskComponent-Link {
   display: flex;
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
-  text-transform: uppercase;
 }
-.TodoComponent-Name {
+.TaskComponent-Name {
   margin-right: 10px;
 }
-.TodoComponent a {
+.TaskComponent a {
   text-decoration: none;
   color: white;
 }
-.TodoComponent a:hover {
+.TaskComponent a:hover {
   text-decoration: none;
   color: white;
 }
-.TodoComponent a:active {
+.TaskComponent a:active {
   text-decoration: none;
   color: white;
+  font-weight: bold;
+}
+.TaskComponent .active {
+  font-size: 26px;
   font-weight: bold;
 }
 .TaskList {
@@ -67,6 +75,38 @@
 }
 .TaskList-Input input[type="text"]:focus::placeholder {
   color: transparent;
+}
+.TaskList-List {
+  display: grid;
+  align-content: start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 90%;
+}
+.TaskList-List::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.TaskList-List::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.618);
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+.TaskList-List::-webkit-scrollbar-button:vertical:start:decrement {
+  background: linear-gradient(120deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(240deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(0deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TaskList-List::-webkit-scrollbar-button:vertical:end:increment {
+  background: linear-gradient(300deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(60deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(180deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TaskList-List::-webkit-scrollbar-button:horizontal:start:decrement {
+  background: linear-gradient(30deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(150deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(270deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TaskList-List::-webkit-scrollbar-button:horizontal:end:increment {
+  background: linear-gradient(210deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(330deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(90deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
 }
 .TodoHeader {
   display: flex;
@@ -149,7 +189,7 @@
 .TodoItem {
   display: grid;
   font-size: 20px;
-  grid-template-columns: 1fr 8fr 2fr;
+  grid-template-columns: 9fr 1fr;
   align-items: center;
   width: 600px;
   height: 50px;
@@ -161,7 +201,7 @@
 .TodoItem-checked {
   display: grid;
   font-size: 20px;
-  grid-template-columns: 1fr 8fr 2fr;
+  grid-template-columns: 9fr 1fr;
   align-items: center;
   width: 600px;
   height: 50px;
@@ -170,17 +210,38 @@
   text-decoration: line-through;
 }
 .TodoItem-checkbox {
-  display: grid;
-  justify-content: center;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
-.TodoItem-checkbox input {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
+.TodoItem-checkbox_checkbox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
 }
-.TodoItem-buttons {
-  display: grid;
-  justify-content: right;
+.TodoItem-checkbox_checkbox + label {
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+.TodoItem-checkbox_checkbox + label::before {
+  content: "";
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  background-image: url("../images/rhombus_inverted.png");
+  margin-right: 0.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+}
+.TodoItem-checkbox_checkbox:checked + label::before {
+  background-image: url("../images/rhombus_inverted_2.png");
+}
+.TodoItem-checkbox_text {
+  margin-left: 10px;
 }
 .TodoItem-delete {
   display: flex;
@@ -189,30 +250,15 @@
   height: 32px;
   border-radius: 5px;
 }
+.TodoItem-delete-notvisible {
+  display: none;
+}
 .TodoItem-delete:hover {
   background-color: #dea6a6;
 }
 .TodoItem-delete img {
   max-width: 90%;
   max-height: 90%;
-}
-.diamond {
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-bottom: 30px solid #ffffff;
-  position: relative;
-  top: -20px;
-}
-.diamond:after {
-  content: "";
-  position: absolute;
-  left: -20px;
-  top: 30px;
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-top: 30px solid #ffffff;
 }
 .TodoList {
   display: grid;
@@ -224,10 +270,14 @@
 }
 .TodoBody {
   display: grid;
-  grid-row-gap: 20px;
-  grid-auto-rows: min-content;
+  grid-template-rows: 1fr 7fr;
+  width: 80%;
+  height: 90%;
+  justify-self: center;
   align-items: start;
-  justify-content: center;
+}
+.TodoInput {
+  display: grid;
 }
 .TodoInput input[type="text"] {
   width: 100%;
@@ -250,7 +300,41 @@
 .TodoInput input[type="text"]:focus::placeholder {
   color: transparent;
 }
-.todoinfo {
+.TodoItemList {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.TodoItemList::-webkit-scrollbar {
+  width: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.TodoItemList::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.618);
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+.TodoItemList::-webkit-scrollbar-button:vertical:start:decrement {
+  background: linear-gradient(120deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(240deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(0deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TodoItemList::-webkit-scrollbar-button:vertical:end:increment {
+  background: linear-gradient(300deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(60deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(180deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TodoItemList::-webkit-scrollbar-button:horizontal:start:decrement {
+  background: linear-gradient(30deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(150deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(270deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TodoItemList::-webkit-scrollbar-button:horizontal:end:increment {
+  background: linear-gradient(210deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(330deg, #02141a 40%, rgba(0, 0, 0, 0) 41%), linear-gradient(90deg, #02141a 30%, rgba(0, 0, 0, 0) 31%);
+  background-color: #f6f8f4;
+}
+.TodoInfo {
   display: grid;
   grid-area: head;
   grid-template-columns: 1fr 10fr;
@@ -262,19 +346,19 @@
   height: 100px;
   font-size: 22px;
 }
-.todoinfo-img {
+.TodoInfo-img {
   display: flex;
   justify-content: right;
   width: 90px;
   max-height: 100%;
   height: 100px;
 }
-.todoinfo-img img {
+.TodoInfo-img img {
   max-width: 100%;
   max-height: 100%;
   height: 100%;
 }
-.todoinfo h1 {
+.TodoInfo h1 {
   display: grid;
   text-align: left;
 }
@@ -288,7 +372,7 @@ body {
 #root {
   display: grid;
   font-size: 34px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("images/forest.jpg");
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("../images/forest.jpg");
   background-size: cover;
   justify-items: center;
   align-items: center;

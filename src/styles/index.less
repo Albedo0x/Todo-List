@@ -1,12 +1,12 @@
 //compress: false
 
-@import "TodoComponent";
-@import "TaskList";
-@import "TodoHeader";
-@import "TodoItem";
-@import "TodoList";
-@import "TodoBody";
-@import "TodoInput";
+@import "./TaskList/TaskComponent.less";
+@import "./TaskList/TaskList.less";
+@import "./TodoList/TodoHeader.less";
+@import "./TodoList/TodoItem.less";
+@import "./TodoList/TodoList.less";
+@import "./TodoList/TodoBody.less";
+@import "./TodoInfo/TodoInfo.less";
 
 * {
   margin: 0;
@@ -21,7 +21,7 @@ body {
   display: grid;
   font-size: 34px;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("./images/forest.jpg");
+    url("../images/forest.jpg");
   background-size: cover;
   justify-items: center;
   align-items: center;
