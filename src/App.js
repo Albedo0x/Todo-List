@@ -1,32 +1,23 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
 import TodoInfo from "./components/TodoInfo/TodoInfo";
 import TaskList from "./components/TaskList/TaskList";
 import TodoList from "./components/TodoList/TodoList";
-import { useSelector } from "react-redux";
 
 function App() {
-  const storeState = useSelector((state) => state.task);
-
-  // const [state, dispatch] = useReducer(
-  //   reducer,
-  //   JSON.parse(localStorage.getItem("test"))
-  // );
-
-  // useEffect(() => {
-  //   localStorage.setItem("test", JSON.stringify(state));
-  // }, [state]);
+  const store = useSelector((state) => state.toolkit);
 
   useEffect(() => {
-    localStorage.setItem("test", JSON.stringify(storeState));
-  }, [storeState]);
+    localStorage.setItem("test", JSON.stringify(store));
+  }, [store]);
 
   return (
     <div className="App">
       <TodoInfo />
       <TaskList />
       <Routes>
-        {storeState.map((todo) => (
+        {store.map((todo) => (
           <Route
             key={todo.todoId}
             path={`/${todo.todoName}`}

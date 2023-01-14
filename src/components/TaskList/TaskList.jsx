@@ -4,7 +4,7 @@ import TaskComponent from "./TaskComponent";
 import { useSelector } from "react-redux";
 
 function TaskList() {
-  const store = useSelector((state) => state.task);
+  const store = useSelector((state) => state.toolkit);
 
   return (
     <div className="TaskList">

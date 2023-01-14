@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  editDesctiptionAction,
-  editHeaderAction,
-} from "../../store/taskreducer";
+import { editDescription, editHeader } from "../../toolkit/toolkitreducer";
 
 function TodoHeader({ header, desc, otherId }) {
   const dispatch = useDispatch();
@@ -30,7 +27,7 @@ function TodoHeader({ header, desc, otherId }) {
       e.preventDefault();
       setReadOnly(true);
       dispatch(
-        editHeaderAction({
+        editHeader({
           todoId: otherId,
           valueName: headerValue,
         })
@@ -44,7 +41,7 @@ function TodoHeader({ header, desc, otherId }) {
       e.preventDefault();
       setReadOnly(true);
       dispatch(
-        editDesctiptionAction({
+        editDescription({
           todoId: otherId,
           valueDesc: value,
         })

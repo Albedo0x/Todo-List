@@ -2,12 +2,12 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import TodoItemDelete from "../library/TodoItemDelete";
 import { useDispatch, useSelector } from "react-redux";
-import { removeTodoAction } from "../../store/taskreducer";
+import { removeTodo } from "../../toolkit/toolkitreducer";
 
 function TaskComponent({ text, id }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const storeState = useSelector((state) => state.task);
+  const storeState = useSelector((state) => state.toolkit);
 
   let prevTodo;
   const cur = storeState.findIndex((item) => item.todoName === text);
@@ -19,8 +19,8 @@ function TaskComponent({ text, id }) {
 
   function removeTodoRedux(event) {
     event.preventDefault();
+    dispatch(removeTodo({ taskId: id }));
     navigate(`/${prevTodo}`);
-    dispatch(removeTodoAction({ taskId: id }));
   }
 
   return (

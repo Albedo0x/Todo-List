@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addItemAction } from "../../store/taskreducer";
+import { addItem } from "../../toolkit/toolkitreducer";
 
 function TodoInput({ id }) {
   const [value, setValue] = useState("");
@@ -9,7 +9,7 @@ function TodoInput({ id }) {
   function addItemRedux(e) {
     if (e.keyCode === 13 && e.target.value !== "") {
       dispatch(
-        addItemAction({
+        addItem({
           taskId: id,
           value: value,
         })

@@ -2,9 +2,9 @@ import React from "react";
 import TodoItemCheckBox from "./TodoItemCheckBox.jsx";
 import TodoItemDelete from "../library/TodoItemDelete";
 import { useDispatch } from "react-redux";
-import { checkItemAction, deleteItemAction } from "../../store/taskreducer.js";
+import { checkItem, deleteItem } from "../../toolkit/toolkitreducer.js";
 
-function TodoItem({ otherId, task, todos }) {
+function TodoItem({ otherId, task }) {
   const dispatch = useDispatch();
   const cls = ["TodoItem"];
 
@@ -15,7 +15,7 @@ function TodoItem({ otherId, task, todos }) {
   function deleteItemRedux() {
     console.log("here");
     dispatch(
-      deleteItemAction({
+      deleteItem({
         todoId: otherId,
         taskId: task.id,
       })
@@ -24,7 +24,7 @@ function TodoItem({ otherId, task, todos }) {
 
   function checkItemRedux() {
     dispatch(
-      checkItemAction({
+      checkItem({
         todoId: otherId,
         taskId: task.id,
       })
