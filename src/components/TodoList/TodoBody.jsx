@@ -6,7 +6,11 @@ function TodoBody({ todo }) {
   return (
     <div className="TodoBody">
       <TodoInput id={todo.todoId} />
-      <TodoItemList todo={todo} />
+      {todo.todos.length > 0 ? (
+        <TodoItemList todo={todo} />
+      ) : (
+        <div>No Tasks</div>
+      )}
     </div>
   );
 }

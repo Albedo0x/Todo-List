@@ -1,29 +1,26 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Context } from "../../context/context";
 import TodoItemDelete from "../library/TodoItemDelete";
+import { useDispatch, useSelector } from "react-redux";
+import { removeTodoAction } from "../../store/taskreducer";
 
 function TaskComponent({ text, id }) {
-  const { state, dispatch } = useContext(Context);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const storeState = useSelector((state) => state.task);
 
   let prevTodo;
-  const cur = state.findIndex((item) => item.todoName === text);
+  const cur = storeState.findIndex((item) => item.todoName === text);
   if (cur > 0) {
-    prevTodo = state[cur - 1].todoName;
+    prevTodo = storeState[cur - 1].todoName;
   } else {
-    prevTodo = state[0].todoName;
+    prevTodo = storeState[0].todoName;
   }
 
-  function removeTodo(event) {
+  function removeTodoRedux(event) {
     event.preventDefault();
     navigate(`/${prevTodo}`);
-    dispatch({
-      type: "removeTodo",
-      payload: {
-        taskId: id,
-      },
-    });
+    dispatch(removeTodoAction({ taskId: id }));
   }
 
   return (
@@ -32,7 +29,7 @@ function TaskComponent({ text, id }) {
         {({ isActive }) => {
           return isActive ? (
             <>
-              <TodoItemDelete removeTodo={removeTodo} />
+              <TodoItemDelete removeTodo={removeTodoRedux} />
               <div className="TaskComponent-Name">{text}</div>
             </>
           ) : (

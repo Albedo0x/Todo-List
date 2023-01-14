@@ -1,42 +1,40 @@
-import React, { useContext } from "react";
-import { Context } from "../../context/context.js";
+import React from "react";
 import TodoItemCheckBox from "./TodoItemCheckBox.jsx";
 import TodoItemDelete from "../library/TodoItemDelete";
+import { useDispatch } from "react-redux";
+import { checkItemAction, deleteItemAction } from "../../store/taskreducer.js";
 
 function TodoItem({ otherId, task, todos }) {
-  const { dispatch } = useContext(Context);
+  const dispatch = useDispatch();
   const cls = ["TodoItem"];
 
   if (task.status) {
     cls.push("-checked");
   }
 
-  function deleteItem() {
-    dispatch({
-      type: "deleteItem",
-      payload: {
+  function deleteItemRedux() {
+    console.log("here");
+    dispatch(
+      deleteItemAction({
         todoId: otherId,
         taskId: task.id,
-      },
-    });
+      })
+    );
   }
 
-  function checkItem() {
-    dispatch({
-      type: "checkItem",
-      payload: {
+  function checkItemRedux() {
+    dispatch(
+      checkItemAction({
         todoId: otherId,
         taskId: task.id,
-      },
-    });
+      })
+    );
   }
-
-  function sortAfterCheck() {}
 
   return (
     <div className={cls.join("")}>
-      <TodoItemCheckBox task={task} checkItem={() => checkItem()} />
-      <TodoItemDelete removeTodo={deleteItem} />
+      <TodoItemCheckBox task={task} checkItem={() => checkItemRedux()} />
+      <TodoItemDelete removeTodo={deleteItemRedux} />
     </div>
   );
 }

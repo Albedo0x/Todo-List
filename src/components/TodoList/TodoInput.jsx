@@ -1,19 +1,19 @@
-import React, { useState, useContext } from "react";
-import { Context } from "../../context/context";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addItemAction } from "../../store/taskreducer";
 
 function TodoInput({ id }) {
-  const { dispatch } = useContext(Context);
   const [value, setValue] = useState("");
+  const dispatch = useDispatch();
 
-  function addItem(e) {
+  function addItemRedux(e) {
     if (e.keyCode === 13 && e.target.value !== "") {
-      dispatch({
-        type: "addItem",
-        payload: {
+      dispatch(
+        addItemAction({
           taskId: id,
           value: value,
-        },
-      });
+        })
+      );
       setValue("");
     }
   }
@@ -25,7 +25,7 @@ function TodoInput({ id }) {
         placeholder="Введи что собираешься делать"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        onKeyUp={addItem}
+        onKeyUp={addItemRedux}
       />
     </div>
   );

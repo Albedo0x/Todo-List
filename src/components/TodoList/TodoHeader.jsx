@@ -1,9 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../../context/context.js";
+import {
+  editDesctiptionAction,
+  editHeaderAction,
+} from "../../store/taskreducer";
 
 function TodoHeader({ header, desc, otherId }) {
-  const { dispatch } = useContext(Context);
+  const dispatch = useDispatch();
   const [readOnly, setReadOnly] = useState(true);
   const [value, setValue] = useState(desc);
   const [headerValue, setHeaderValue] = useState(header);
@@ -21,32 +25,30 @@ function TodoHeader({ header, desc, otherId }) {
     setValue(e.target.value);
   }
 
-  function finishNameEditing(e) {
+  function finishNameEditingRedux(e) {
     if (e.key === "Enter") {
       e.preventDefault();
       setReadOnly(true);
-      dispatch({
-        type: "editHeader",
-        payload: {
+      dispatch(
+        editHeaderAction({
           todoId: otherId,
           valueName: headerValue,
-        },
-      });
+        })
+      );
       navigate(`/${headerValue}`);
     }
   }
 
-  function finishEditing(e) {
+  function finishEditingRedux(e) {
     if (e.key === "Enter") {
       e.preventDefault();
       setReadOnly(true);
-      dispatch({
-        type: "editDescription",
-        payload: {
+      dispatch(
+        editDesctiptionAction({
           todoId: otherId,
           valueDesc: value,
-        },
-      });
+        })
+      );
     }
   }
 
@@ -63,7 +65,7 @@ function TodoHeader({ header, desc, otherId }) {
           readOnly={readOnly}
           onDoubleClick={enableEditing}
           onChange={(e) => changeName(e)}
-          onKeyDown={(e) => finishNameEditing(e)}
+          onKeyDown={(e) => finishNameEditingRedux(e)}
           spellCheck="false"
           maxLength="20"
         />
@@ -79,7 +81,7 @@ function TodoHeader({ header, desc, otherId }) {
           spellCheck="false"
           onDoubleClick={enableEditing}
           onChange={(e) => changeDescription(e)}
-          onKeyDown={(e) => finishEditing(e)}
+          onKeyDown={(e) => finishEditingRedux(e)}
           maxLength="600"
         ></textarea>
       </div>

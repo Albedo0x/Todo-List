@@ -1,4 +1,6 @@
-function headerReducer(state, { type, payload }) {
+const defaultState = JSON.parse(localStorage.getItem("test"));
+
+function headerReduxReducer(state = defaultState, { type, payload }) {
   switch (type) {
     case "editHeader":
       return state.map((elem) => {
@@ -15,8 +17,8 @@ function headerReducer(state, { type, payload }) {
         return elem;
       });
     default:
-      throw new Error(`Unknown action type: ${type}`);
+      return state;
   }
 }
 
-export default headerReducer;
+export default headerReduxReducer;

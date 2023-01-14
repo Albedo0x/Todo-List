@@ -6,7 +6,6 @@ function TodoItemList({ todo }) {
     <div className="TodoItemList">
       {todo.todos.map((task, i) => (
         <TodoItem
-          // key={task.id}
           key={i}
           task={task}
           otherId={todo.todoId}

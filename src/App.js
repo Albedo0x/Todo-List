@@ -1,49 +1,40 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import TodoInfo from "./components/TodoInfo/TodoInfo";
 import TaskList from "./components/TaskList/TaskList";
 import TodoList from "./components/TodoList/TodoList";
-import { Context } from "./context/context.js";
-import reducer from "./utilities/reducer";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import reducerRedux from "./utilities/reducerRedux";
-
-const store = createStore(reducerRedux);
+import { useSelector } from "react-redux";
 
 function App() {
-  const [state, dispatch] = useReducer(
-    reducer,
-    JSON.parse(localStorage.getItem("test"))
-  );
+  const storeState = useSelector((state) => state.task);
+
+  // const [state, dispatch] = useReducer(
+  //   reducer,
+  //   JSON.parse(localStorage.getItem("test"))
+  // );
+
+  // useEffect(() => {
+  //   localStorage.setItem("test", JSON.stringify(state));
+  // }, [state]);
 
   useEffect(() => {
-    localStorage.setItem("test", JSON.stringify(state));
-  }, [state]);
+    localStorage.setItem("test", JSON.stringify(storeState));
+  }, [storeState]);
 
   return (
-    <Provider store={store}>
-      <Context.Provider
-        value={{
-          state,
-          dispatch,
-        }}
-      >
-        <div className="App">
-          <TodoInfo />
-          <TaskList />
-          <Routes>
-            {state.map((todo) => (
-              <Route
-                key={todo.todoId}
-                path={`/${todo.todoName}`}
-                element={<TodoList todo={todo} />}
-              />
-            ))}
-          </Routes>
-        </div>
-      </Context.Provider>
-    </Provider>
+    <div className="App">
+      <TodoInfo />
+      <TaskList />
+      <Routes>
+        {storeState.map((todo) => (
+          <Route
+            key={todo.todoId}
+            path={`/${todo.todoName}`}
+            element={<TodoList todo={todo} />}
+          />
+        ))}
+      </Routes>
+    </div>
   );
 }
 

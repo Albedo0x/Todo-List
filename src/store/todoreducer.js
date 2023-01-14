@@ -1,4 +1,6 @@
-function todoReducer(state, { type, payload }) {
+const defaultState = JSON.parse(localStorage.getItem("test"));
+
+function todoReduxReducer(state = defaultState, { type, payload }) {
   switch (type) {
     case "deleteItem":
       return state.map((elem) => {
@@ -48,8 +50,8 @@ function todoReducer(state, { type, payload }) {
         return elem;
       });
     default:
-      throw new Error(`Unknown action type: ${type}`);
+      return state;
   }
 }
 
-export default todoReducer;
+export default todoReduxReducer;

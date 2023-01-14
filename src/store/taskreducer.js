@@ -1,8 +1,29 @@
 const defaultState = JSON.parse(localStorage.getItem("test"));
 
-function reducerRedux(state = defaultState, { type, payload }) {
+const addTodo = "addTodo";
+const removeTodo = "removeTodo";
+const deleteItem = "deleteItem";
+const checkItem = "checkItem";
+const addItem = "addItem";
+const editHeader = "editHeader";
+const editDescription = "editDescription";
+
+function taskReduxReducer(state = defaultState, { type, payload }) {
   switch (type) {
-    case "deleteItem":
+    case addTodo:
+      return [
+        ...state,
+        {
+          todoId: `${payload.idOfTodo}-${Date.now()}`,
+          todoName: `${payload.value}`,
+          todoDescription: `This is ${payload.value} to do`,
+          todos: [],
+        },
+      ];
+    case removeTodo:
+      return state.filter((todo) => todo.todoId !== payload.taskId);
+
+    case deleteItem:
       return state.map((elem) => {
         if (elem.todoId === payload.todoId) {
           elem.todos.splice(
@@ -12,7 +33,7 @@ function reducerRedux(state = defaultState, { type, payload }) {
         }
         return elem;
       });
-    case "checkItem":
+    case checkItem:
       return state.map((elem) => {
         if (elem.todoId === payload.todoId) {
           elem.todos.map((todo, index) => {
@@ -38,7 +59,7 @@ function reducerRedux(state = defaultState, { type, payload }) {
         }
         return elem;
       });
-    case "addItem":
+    case addItem:
       return state.map((elem) => {
         if (elem.todoId === payload.taskId) {
           elem.todos.push({
@@ -49,32 +70,14 @@ function reducerRedux(state = defaultState, { type, payload }) {
         }
         return elem;
       });
-    case "addTodo":
-      return [
-        ...state,
-        {
-          todoId: `${payload.idOfTodo}-${Date.now()}`,
-          todoName: `${payload.value}`,
-          todoDescription: `This is ${payload.value} to do`,
-          todos: [
-            {
-              id: `${payload.idOfTodo}-${payload.value}`,
-              status: false,
-              text: "Add tasks here",
-            },
-          ],
-        },
-      ];
-    case "removeTodo":
-      return state.filter((todo) => todo.todoId !== payload.taskId);
-    case "editHeader":
+    case editHeader:
       return state.map((elem) => {
         if (elem.todoId === payload.todoId) {
           elem.todoName = payload.valueName;
         }
         return elem;
       });
-    case "editDescription":
+    case editDescription:
       return state.map((elem) => {
         if (elem.todoId === payload.todoId) {
           elem.todoDescription = payload.valueDesc;
@@ -86,4 +89,15 @@ function reducerRedux(state = defaultState, { type, payload }) {
   }
 }
 
-export default reducerRedux;
+export default taskReduxReducer;
+
+export const addTodoAction = (payload) => ({ type: addTodo, payload });
+export const removeTodoAction = (payload) => ({ type: removeTodo, payload });
+export const deleteItemAction = (payload) => ({ type: deleteItem, payload });
+export const checkItemAction = (payload) => ({ type: checkItem, payload });
+export const addItemAction = (payload) => ({ type: addItem, payload });
+export const editHeaderAction = (payload) => ({ type: editHeader, payload });
+export const editDesctiptionAction = (payload) => ({
+  type: editDescription,
+  payload,
+});
