@@ -17,11 +17,11 @@ function App() {
       <TodoInfo />
       <TaskList />
       <Routes>
-        {store.map((todo) => (
+        {store.map((todo, index) => (
           <Route
             key={todo.todoId}
             path={`/${todo.todoName}`}
-            element={<TodoList todo={todo} />}
+            element={<TodoList todo={todo} index={index} />}
           />
         ))}
       </Routes>

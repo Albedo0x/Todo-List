@@ -13,51 +13,24 @@ const toolkitSlice = createSlice({
       });
     },
     removeTodo(state, action) {
-      return state.filter((todo) => todo.todoId !== action.payload.taskId);
+      state.splice(action.payload.taskId, 1);
     },
     addItem(state, action) {
-      state.map((elem) => {
-        if (elem.todoId === action.payload.taskId) {
-          elem.todos.push({
-            id: Date.now() / 2,
-            status: false,
-            text: action.payload.value,
-          });
-        }
-        return elem;
+      state[action.payload.taskId].todos.push({
+        id: Date.now() / 2,
+        status: false,
+        text: action.payload.value,
       });
     },
     deleteItem(state, action) {
-      state.map((elem) => {
-        if (elem.todoId === action.payload.todoId) {
-          elem.todos.splice(
-            elem.todos.findIndex((item) => item.id === action.payload.taskId),
-            1
-          );
-        }
-        return elem;
-      });
+      state[action.payload.todoId].todos.splice(action.payload.taskId, 1);
     },
     checkItem(state, action) {
       state.map((elem) => {
         if (elem.todoId === action.payload.todoId) {
-          elem.todos.map((todo, index) => {
+          elem.todos.map((todo) => {
             if (todo.id === action.payload.taskId) {
               todo.status = !todo.status;
-              elem.todos.splice(index, 1);
-              if (todo.status) {
-                elem.todos.push({
-                  id: Date.now() / 2,
-                  status: todo.status,
-                  text: todo.text,
-                });
-              } else {
-                elem.todos.unshift({
-                  id: Date.now() / 2,
-                  status: todo.status,
-                  text: todo.text,
-                });
-              }
             }
             return todo;
           });
@@ -66,20 +39,10 @@ const toolkitSlice = createSlice({
       });
     },
     editHeader(state, action) {
-      state.map((elem) => {
-        if (elem.todoId === action.payload.todoId) {
-          elem.todoName = action.payload.valueName;
-        }
-        return elem;
-      });
+      state[action.payload.todoId].todoName = action.payload.valueName;
     },
     editDescription(state, action) {
-      state.map((elem) => {
-        if (elem.todoId === action.payload.todoId) {
-          elem.todoDescription = action.payload.valueDesc;
-        }
-        return elem;
-      });
+      state[action.payload.todoId].todoDescription = action.payload.valueDesc;
     },
   },
 });

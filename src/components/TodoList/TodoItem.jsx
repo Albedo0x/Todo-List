@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import TodoItemCheckBox from "./TodoItemCheckBox.jsx";
 import TodoItemDelete from "../library/TodoItemDelete";
 import { useDispatch } from "react-redux";
 import { checkItem, deleteItem } from "../../toolkit/toolkitreducer.js";
 
-function TodoItem({ otherId, task }) {
+function TodoItem({ otherId, task, indexOfTodo, index }) {
+  const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch();
   const cls = ["TodoItem"];
 
@@ -13,11 +14,10 @@ function TodoItem({ otherId, task }) {
   }
 
   function deleteItemRedux() {
-    console.log("here");
     dispatch(
       deleteItem({
-        todoId: otherId,
-        taskId: task.id,
+        todoId: index,
+        taskId: indexOfTodo,
       })
     );
   }
@@ -32,9 +32,22 @@ function TodoItem({ otherId, task }) {
   }
 
   return (
-    <div className={cls.join("")}>
-      <TodoItemCheckBox task={task} checkItem={() => checkItemRedux()} />
-      <TodoItemDelete removeTodo={deleteItemRedux} />
+    <div
+      className={cls.join("")}
+      onMouseEnter={() => setIsActive(true)}
+      onMouseLeave={() => setIsActive(false)}
+    >
+      {isActive ? (
+        <>
+          <TodoItemCheckBox task={task} checkItem={() => checkItemRedux()} />
+          <TodoItemDelete removeTodo={deleteItemRedux} />
+        </>
+      ) : (
+        <>
+          <TodoItemCheckBox task={task} checkItem={() => checkItemRedux()} />
+          <div></div>
+        </>
+      )}
     </div>
   );
 }

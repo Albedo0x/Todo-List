@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { editDescription, editHeader } from "../../toolkit/toolkitreducer";
 
-function TodoHeader({ header, desc, otherId }) {
+function TodoHeader({ header, desc, otherId, index }) {
   const dispatch = useDispatch();
   const [readOnly, setReadOnly] = useState(true);
   const [value, setValue] = useState(desc);
@@ -28,7 +28,7 @@ function TodoHeader({ header, desc, otherId }) {
       setReadOnly(true);
       dispatch(
         editHeader({
-          todoId: otherId,
+          todoId: index,
           valueName: headerValue,
         })
       );
@@ -42,7 +42,7 @@ function TodoHeader({ header, desc, otherId }) {
       setReadOnly(true);
       dispatch(
         editDescription({
-          todoId: otherId,
+          todoId: index,
           valueDesc: value,
         })
       );

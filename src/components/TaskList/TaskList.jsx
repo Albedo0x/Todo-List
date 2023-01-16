@@ -11,11 +11,12 @@ function TaskList() {
       <div className="TaskList-Container">
         <TaskInput />
         <ul className="TaskList-List">
-          {store.map((todo) => (
+          {store.map((todo, index) => (
             <TaskComponent
               key={todo.todoId}
               id={todo.todoId}
               text={todo.todoName}
+              index={index}
             />
           ))}
         </ul>

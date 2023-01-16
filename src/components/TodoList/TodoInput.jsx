@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../toolkit/toolkitreducer";
 
-function TodoInput({ id }) {
+function TodoInput({ index }) {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
 
@@ -10,7 +10,7 @@ function TodoInput({ id }) {
     if (e.keyCode === 13 && e.target.value !== "") {
       dispatch(
         addItem({
-          taskId: id,
+          taskId: index,
           value: value,
         })
       );

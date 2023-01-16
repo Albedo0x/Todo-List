@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import TodoItemDelete from "../library/TodoItemDelete";
 import { useDispatch, useSelector } from "react-redux";
 import { removeTodo } from "../../toolkit/toolkitreducer";
 
-function TaskComponent({ text, id }) {
+function TaskComponent({ text, id, index }) {
+  const [isShown, setIsShown] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const storeState = useSelector((state) => state.toolkit);
@@ -19,15 +20,19 @@ function TaskComponent({ text, id }) {
 
   function removeTodoRedux(event) {
     event.preventDefault();
-    dispatch(removeTodo({ taskId: id }));
+    dispatch(removeTodo({ taskId: index }));
     navigate(`/${prevTodo}`);
   }
 
   return (
-    <li className="TaskComponent">
+    <li
+      className="TaskComponent"
+      onMouseEnter={() => setIsShown(true)}
+      onMouseLeave={() => setIsShown(false)}
+    >
       <NavLink className="TaskComponent-Link" to={`/${text}`}>
         {({ isActive }) => {
-          return isActive ? (
+          return isActive && isShown ? (
             <>
               <TodoItemDelete removeTodo={removeTodoRedux} />
               <div className="TaskComponent-Name">{text}</div>

@@ -1,15 +1,19 @@
 import React from "react";
 import TodoItem from "./TodoItem";
 
-function TodoItemList({ todo }) {
+function TodoItemList({ todo, index }) {
+  const orderedTodos = todo.todos.slice().sort((a, b) => a.status - b.status);
+
   return (
     <div className="TodoItemList">
-      {todo.todos.map((task, i) => (
+      {orderedTodos.map((task, indexOfTodo) => (
         <TodoItem
-          key={i}
+          key={indexOfTodo}
           task={task}
           otherId={todo.todoId}
           todos={todo.todos}
+          indexOfTodo={indexOfTodo}
+          index={index}
         />
       ))}
     </div>
